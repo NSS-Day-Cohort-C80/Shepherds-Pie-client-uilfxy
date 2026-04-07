@@ -19,7 +19,7 @@ export const NavBar = () => {
             className=""
             onClick={()=>{ 
                 localStorage.removeItem("shepherd_user")
-                navigate("/login")
+                navigate("/login", {replace:true})
             }
             }>
                 Logout
