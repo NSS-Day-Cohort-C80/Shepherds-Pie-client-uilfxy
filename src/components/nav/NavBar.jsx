@@ -9,10 +9,10 @@ export const EmployeeNavBar = () => {
         <Link className="" to="/welcome">Home</Link>
         </li>
         <li className="">
-            <Link to="/orderForm">Order Form</Link>
+            <Link to="/order">Order Form</Link>
         </li>
         <li className="">
-            <Link to= "/reviewOrder">Review Order</Link>
+            <Link to= "/review">Review Order</Link>
         </li>
         <li className="">
             <Link to ="/login"
