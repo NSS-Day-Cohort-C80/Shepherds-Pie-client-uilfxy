@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { getEmployeeByEmail } from "../../services/userService"
 import { useNavigate } from "react-router-dom"
-
+import "./Login.css"
 export const Login = () => {
     const [email, setEmail] = useState("")
     const navigate = useNavigate()
