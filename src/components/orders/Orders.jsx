@@ -1,3 +1,3 @@
-export const Order = () => {
+export const Orders = () => {
     <h2>Order</h2>
 }

@@ -35,7 +35,7 @@ export const Review = ({ currentUser }) => {
 
     // Fetch entrees + their toppings whenever the active order changes
     useEffect(() => {
-        if (!activeOrderId) return 
+        if (!activeOrderId) return
 
         const fetchEntrees = async () => {
             const fetchedEntrees = await getEntreesByOrderId(activeOrderId)
