@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
 
-export const EmployeeNavBar = () => {
+export const NavBar = () => {
     const navigate = useNavigate()
 
-    return 
+    return (
     <ul>
         <li className="">
         <Link className="" to="/welcome">Home</Link>
@@ -23,4 +23,5 @@ export const EmployeeNavBar = () => {
             </Link>
         </li>
     </ul>
+    )
 }
