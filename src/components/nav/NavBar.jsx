@@ -15,10 +15,13 @@ export const NavBar = () => {
             <Link to= "/review">Review Order</Link>
         </li>
         <li className="">
-            <Link to ="/login"
-            replace 
+            <Link to ="/login" 
             className=""
-            onClick={()=> localStorage.removeItem("shepherd_user")}>
+            onClick={()=>{ 
+                localStorage.removeItem("shepherd_user")
+                navigate("/login")
+            }
+            }>
                 Logout
             </Link>
         </li>
