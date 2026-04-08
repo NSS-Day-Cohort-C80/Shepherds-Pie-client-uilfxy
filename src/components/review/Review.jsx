@@ -13,7 +13,7 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
     const [cheeses, setCheeses] = useState([])
     const [sauces, setSauces] = useState([])
     const [toppings, setToppings] = useState([])
-    const [tip, setTip] = useState(0)
+    const [tip, setTip] = useState(1)
 
     const navigate = useNavigate()
 
@@ -80,15 +80,17 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
         return sumOfEntrees + getEntreeCost(entree)
     }, 0)
 
-    const subtotalPrice = subtotal.toLocalString("en-US", {
+    const subtotalPrice = subtotal.toLocaleString("en-US", {
         style: "currency",
         currency: "USD"
     })
 
-    //add the tip to get the final total (add the tip if there was something entered, otherwise use 0)
-    const total = subtotal + parseFloat(tip || 0)
+    const deliveryCharge = orderData.deliveredBy ? 5.00 : 0
 
-    const totalPrice = total.toLocalString("en-US", {
+    //add the tip to get the final total (add the tip if there was something entered, otherwise use 0)
+    const total = subtotal + parseFloat(tip || 0) + deliveryCharge
+
+    const totalPrice = total.toLocaleString("en-US", {
         style: "currency",
         currency: "USD"
     })
@@ -159,9 +161,10 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
 
             {orderData.entrees.length > 0 && (
                 <div className="order-totals">
-                    <p>Subtotal: ${subtotalPrice.toFixed(2)}</p>
-                    <p>Tip: ${parseFloat(tip).toFixed(2)}</p>
-                    <p>Total: ${totalPrice.toFixed(2)}</p>
+                    <p>Subtotal: {subtotalPrice}</p>
+                    {orderData.deliveredBy && <p>Delivery charge : $5.00</p>}
+                    {tip && <p>Tip: ${parseFloat(tip).toFixed(2)}</p>}
+                    <p>Total: {totalPrice}</p>
                 </div>
             )}
 
@@ -184,7 +187,7 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
                             value={tip}
                             onChange={(evt) => setTip(evt.target.value)}
                             className="tip-input"
-                            placeholder="0.00"
+                            placeholder="1.00"
                         />
                     </div>
 
