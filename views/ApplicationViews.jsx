@@ -9,7 +9,7 @@ export const ApplicationViews = () => {
     const [currentUser, setCurrentUser] = useState({})
     const [orderData, setOrderData] = useState({
         tableNumber: null,
-        deliveredBy: "",
+        deliveredBy: null,
         entrees: []
     })
 
