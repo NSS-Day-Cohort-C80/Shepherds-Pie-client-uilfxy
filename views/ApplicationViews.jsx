@@ -7,6 +7,11 @@ import { Review } from "../src/components/review/Review"
 
 export const ApplicationViews = () => {
     const [currentUser, setCurrentUser] = useState({})
+    const [orderData, setOrderData] = useState({
+        tableNumber: null,
+        deliveredBy: "",
+        entrees: []
+    })
 
     useEffect(() => {
         const localShepherdUser = localStorage.getItem("shepherd_user")
@@ -27,8 +32,26 @@ export const ApplicationViews = () => {
                 }
             >
                 <Route index element={<Welcome currentUser={currentUser} />} />
-                <Route path="order" element={<Orders currentUser={currentUser} />} />
-                <Route path="review" element={<Review currentUser={currentUser} />} />
+                <Route 
+                    path="order" 
+                    element={
+                        <Orders 
+                            currentUser={currentUser} 
+                            orderData={orderData} 
+                            setOrderData={setOrderData}
+                        />
+                    } 
+                />
+                <Route 
+                    path="review" 
+                    element={
+                        <Review 
+                            currentUser={currentUser} 
+                            orderData={orderData} 
+                            setOrderData={setOrderData}
+                        />
+                    } 
+                />
             </Route>
         </Routes>
     )
