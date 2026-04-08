@@ -3,16 +3,15 @@ import { getAllSauces } from "../../services/sauceService";
 import { getAllCheeses } from "../../services/cheeseService";
 import { getAllToppings } from "../../services/toppingsService";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   const [allSizes, setAllSizes] = useState([]);
   const [allSauces, setAllSauces] = useState([]);
   const [allCheeses, setAllCheeses] = useState([]);
   const [allToppings, setAllToppings] = useState([]);
-  const [selectedSize, setSelectedSize] = useState({});
-  const [selectedSauce, setSelectedSauce] = useState({});
-  const [selectedCheese, setSelectedCheese] = useState({});
   const [selectedToppings, setSelectedToppings] = useState([]);
+  const [currentPizza, setCurrentPizza] = useState({ sizeId: 0, sauceId: 0, cheeseId: 0, toppingIds: [] })
 
   useEffect(() => {
     getAllSizes().then((sizesArray) => {
@@ -35,69 +34,52 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   }, []);
 
   const handleSizeSelection = (event) => {
-    const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
-
-    if (orderDataCopy.entrees.length === 0) {
-      orderDataCopy.entrees.push({
-        sizeId: event.target.value,
-      });
-    } else {
-      orderDataCopy.entrees[0].sizeId = event.target.value;
-    }
-
-    setSelectedSize(event.target.value);
-    setOrderData(orderDataCopy);
+    const currentPizzaCopy = { ...currentPizza }
+    currentPizzaCopy.sizeId = event.target.value;
+    setCurrentPizza(currentPizzaCopy)
   };
 
   const handleSauceSelection = (event) => {
-    const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
-
-    if (orderDataCopy.entrees.length === 0) {
-      orderDataCopy.entrees.push({
-        sauceId: event.target.value,
-      });
-    } else {
-      orderDataCopy.entrees[0].sauceId = event.target.value;
-    }
-
-    setSelectedSauce(event.target.value);
-    setOrderData(orderDataCopy);
+    const currentPizzaCopy = { ...currentPizza }
+    currentPizzaCopy.sauceId = event.target.value;
+    setCurrentPizza(currentPizzaCopy)
   };
 
   const handleCheeseSelection = (event) => {
-    const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
-
-    if (orderDataCopy.entrees.length === 0) {
-      orderDataCopy.entrees.push({
-        cheeseId: event.target.value,
-      });
-    } else {
-      orderDataCopy.entrees[0].cheeseId = event.target.value;
-    }
-
-    setSelectedCheese(event.target.value);
-    setOrderData(orderDataCopy);
+    const currentPizzaCopy = { ...currentPizza }
+    currentPizzaCopy.cheeseId = event.target.value;
+    setCurrentPizza(currentPizzaCopy)
   };
 
   const handleToppingsSelection = (event) => {
-    const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
+    const currentPizzaCopy = { ...currentPizza };
 
     if (event.target.checked) {
       const stateCopy = [...selectedToppings];
       stateCopy.push(event.target.value);
       setSelectedToppings(stateCopy);
-      orderDataCopy.entrees[0].toppingIds = stateCopy;
-      setOrderData(orderDataCopy);
+      currentPizzaCopy.toppingIds = stateCopy;
+      setCurrentPizza(currentPizzaCopy);
     } else {
       const stateCopy = [...selectedToppings];
       const uncheckedToppings = stateCopy.filter(
         (topping) => topping !== event.target.value,
       );
       setSelectedToppings(uncheckedToppings);
-      orderDataCopy.entrees[0].toppingIds = uncheckedToppings;
-      setOrderData(orderDataCopy);
+      currentPizzaCopy.toppingIds = uncheckedToppings;
+      setCurrentPizza(currentPizzaCopy);
     }
   };
+
+  const handleAddEntree = (event) => {
+    const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
+    orderDataCopy.entrees.push(currentPizza)
+    setOrderData(orderDataCopy)
+    setCurrentPizza({ sizeId: 0, sauceId: 0, cheeseId: 0, toppingIds: [] })
+    setSelectedToppings([])
+  }
+
+  const navigate = useNavigate()
 
   return (
     <div>
@@ -105,6 +87,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         <div>
           <label for="size-options">Pick Your Size: </label>
           <select
+            value={currentPizza.sizeId}
             id="size-options"
             onChange={(event) => handleSizeSelection(event)}
           >
@@ -120,8 +103,9 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         </div>
 
         <div>
-          <label for="size-options">Pick Your Sauce: </label>
+          <label for="sauce-options">Pick Your Sauce: </label>
           <select
+            value={currentPizza.sauceId}
             id="sauce-options"
             onChange={(event) => handleSauceSelection(event)}
           >
@@ -139,6 +123,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         <div>
           <label for="cheese-options">Pick Your Cheese: </label>
           <select
+            value={currentPizza.cheeseId}
             id="cheese-options"
             onChange={(event) => handleCheeseSelection(event)}
           >
@@ -162,6 +147,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
                 <div key={topping.id}>
                   <label for={topping.id}>{topping.name} </label>
                   <input
+                    checked={currentPizza.toppingIds.some((id) => parseInt(id) === topping.id)}
                     type="checkbox"
                     name="topping"
                     id={topping.id}
@@ -173,6 +159,12 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
             })}
           </div>
         </section>
+      </div>
+
+      <div>
+        <button onClick={() => { navigate("/review") }}>Review Order</button>
+        <button onClick={handleAddEntree}>Add Entree</button>
+        <button >Update Order</button>
       </div>
     </div>
   );
