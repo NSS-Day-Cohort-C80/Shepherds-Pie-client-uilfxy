@@ -4,116 +4,136 @@ import { getAllSizes } from "../../services/sizeService"
 import { getAllCheeses } from "../../services/cheeseService"
 import { getAllSauces } from "../../services/sauceService"
 import { getAllToppings } from "../../services/toppingsService"
-import { getEntreesByOrderId } from "../../services/entreeService"
-import { getEntreeToppingsByEntreeId } from "../../services/entreeToppingsService"
-import { getOrderById, updateOrder } from "../../services/orderService"
+import { createOrder } from "../../services/orderService"
+import { createEntree } from "../../services/entreeService"
+import { createEntreeTopping } from "../../services/entreeToppingsService"
 
-export const Review = ({ currentUser }) => {
-    const [entrees, setEntrees] = useState([])
+export const Review = ({ currentUser, orderData, setOrderData }) => {
     const [sizes, setSizes] = useState([])
     const [cheeses, setCheeses] = useState([])
     const [sauces, setSauces] = useState([])
     const [toppings, setToppings] = useState([])
-    const [currentOrder, setCurrentOrder] = useState({})
     const [tip, setTip] = useState(0)
-    const [showTipInput, setShowTipInput] = useState(false)
 
     const navigate = useNavigate()
 
-    const activeOrderId = currentUser?.activeOrderId
-
     const fetchAllSizesCheesesSaucesAndToppings = async () => {
-            setSizes(await getAllSizes())
-            setCheeses(await getAllCheeses())
-            setSauces(await getAllSauces())
-            setToppings(await getAllToppings())
+        setSizes(await getAllSizes())
+        setCheeses(await getAllCheeses())
+        setSauces(await getAllSauces())
+        setToppings(await getAllToppings())
     }
 
     useEffect(() => {
         fetchAllSizesCheesesSaucesAndToppings()
     }, [])
 
-    // Fetch entrees + their toppings whenever the active order changes
-    useEffect(() => {
-        if (!activeOrderId) return
-
-        const fetchEntrees = async () => {
-            const fetchedEntrees = await getEntreesByOrderId(activeOrderId)
-            const order = await getOrderById(activeOrderId)
-            
-            const entreesWithToppings = []
-            for (const entree of fetchedEntrees) {
-                const entreeToppings = await getEntreeToppingsByEntreeId(entree.id)
-                entreesWithToppings.push({ ...entree, entreeToppings })
-            }
-
-            setEntrees(entreesWithToppings)
-            setCurrentOrder(order)
-        }
-
-        fetchEntrees()
-    }, [activeOrderId])
-
-    // Helper functions 
-
-    const findById = (array, id) => array.find((item) => item.id === id)
-    
-    const getEntreeCost = (entree) => {
-        const base = findById(sizes, entree.sizeId)?.baseCost ?? 0
-        const toppingsCost = entree.entreeToppings?.reduce((sum, entreeTopping) => {
-            return sum + (findById(toppings, entreeTopping.toppingId)?.cost ?? 0)
-        }, 0) ?? 0
-        return base + toppingsCost
+    //don't render anything until all fetch data has loaded (useful so i don't have to use ? and ?? everywhere)
+    if (!sizes.length || !cheeses.length || !sauces.length || !toppings.length) {
+        return <p>Loading...</p>
     }
 
+    //finds a single item in an array by its id. Makes it easy to do .find so i don't have to rewrite it constantly throughout this module (helper function)
+    const findById = (array, id) => array.find((item) => item.id === id)
+
+    //calculates the total cost of one pizza (base size cost + all topping costs). entree and the toppingId/toppingIds arguments get entrees from the orderData.entrees.map array method used in the return jsx below
+    const getBaseCostPrice = (entree) => {
+        //const size = sizes.find((size) => size.id === entree.sizeId)
+        const size = findById(sizes, entree.sizeId)
+        return size.baseCost
+    }
+
+    const getToppingCost = (toppingId) => {
+        const topping = findById(toppings, toppingId)
+        return topping.cost
+    }
+
+    const getTotalToppingCost = (toppingIds) => {
+        return toppingIds.reduce((sumOfToppings, toppingId) => {
+            return sumOfToppings + getToppingCost(toppingId)
+        }, 0)
+    }
+
+    const getEntreeCost = (entree) => {
+        const basePrice = getBaseCostPrice(entree)
+        const toppingsPrice = getTotalToppingCost(entree.toppingIds)
+        return basePrice + toppingsPrice
+    }
+
+    //instead of writing this out in the return jsx, we can write a function here to make the pizza description string and call it in the return jsx. it goes through each item array and finds the matching id between the item and the entree itemId and pulls out the name of the matching item
     const formatEntreeDescription = (entree) => {
-        const size = findById(sizes, entree.sizeId)?.name ?? "None"
-        const sauce = findById(sauces, entree.sauceId)?.name ?? "None"
-        const cheese = findById(cheeses, entree.cheeseId)?.name ?? "None"
-        const toppingNames = entree.entreeToppings?.length
-            ? entree.entreeToppings.map((entreeTopping) => findById(toppings, entreeTopping.toppingId)?.name).join(", ")
+        const sizeName = findById(sizes, entree.sizeId).name
+        const sauceName = findById(sauces, entree.sauceId).name
+        const cheeseName = findById(cheeses, entree.cheeseId).name
+
+        //first we check if the entree has toppings, if it does we go through the entree.toppingIds array in orderData local storage and find the name of the topping that matches the toppingId attached to the entree, if the entree has no toppings we return no toppings. 
+        const hasToppings = entree.toppingIds.length > 0
+        const toppingNames = hasToppings
+            ? entree.toppingIds.map((toppingId) => findById(toppings, toppingId).name).join(", ")
             : "no toppings"
 
-        return `Order #${activeOrderId}: ${size} pizza with ${sauce} sauce, ${cheese} cheese, and ${toppingNames}.`
+        return `${sizeName} pizza with ${sauceName} sauce, ${cheeseName} cheese, and ${toppingNames}.`
     }
 
-    const subtotal = entrees.reduce((sum, entree) => sum + getEntreeCost(entree), 0)
+    //add up the cost of every pizza on the order
+    const subtotal = orderData.entrees.reduce((sumOfEntrees, entree) => {
+        return sumOfEntrees + getEntreeCost(entree)
+    }, 0)
+
+    //add the tip to get the final total (add the tip if there was something entered, otherwise use 0)
     const total = subtotal + parseFloat(tip || 0)
 
 
     const handlePlaceOrder = async () => {
-        if (entrees.length === 0) {
+        if (!orderData.entrees.length) {
             window.alert("Please add at least one pizza before placing an order.")
             return
         }
 
-        await updateOrder({
-            ...currentOrder,
-            tip: parseFloat(tip || 0)}
-        )
+        const newOrder = await createOrder({
+            tableNumber: orderData.tableNumber,
+            createdBy: currentUser.id,
+            deliveredBy: orderData.deliveredBy,
+            timeStamp: new Date(),
+            tipAmount: parseFloat(tip || 0),
+        })
 
-        localStorage.setItem("shepherd_user", JSON.stringify({
-            id: currentUser.id,
-            activeOrderId: null
-        }))
-       
+        //if we have multiple entrees we need to create a new entree obj in the database so a for loop is used, and we do the same for entreeToppings.
+        for (const entree of orderData.entrees) {
+            const newEntree = await createEntree({
+                orderId: newOrder.id,
+                sizeId: entree.sizeId,
+                cheeseId: entree.cheeseId,
+                sauceId: entree.sauceId,
+            })
+
+            for (const toppingId of entree.toppingIds) {
+                await createEntreeTopping({
+                    entreeId: newEntree.id,
+                    toppingId: toppingId,
+                })
+            }
+        }
+
+        //once order is submitted and everything is posted we need to clear local order state and navigate home so nothing carries over to the next order that is made
+        setOrderData({ entrees: [] })
         navigate("/")
     }
 
-
+    //the index thats used in the orderData.entrees.map array method refers to the position of the entree in the array (array index number). also, orderData.entrees.map loops through each entree in the orderData obj and passes them one at a time into the helper functions defined above
     return (
         <main className="review-order-container">
             <h1 className="review-order-title">Review Order</h1>
 
             <section className="pizza-list">
-                {entrees.length === 0 ? (
+                {!orderData.entrees.length ? (
                     <p className="empty-msg">No pizzas added yet.</p>
                 ) : (
-                    entrees.map((entree) => (
-                        <div key={entree.id} className="pizza-item">
+                    orderData.entrees.map((entree, index) => (
+                        <div key={index} className="pizza-item">
                             <button
                                 className="edit-btn"
-                                onClick={() => navigate(`/order/${entree.id}`)}
+                                onClick={() => navigate(`/order/${index}`)}
                             >
                                 Edit
                             </button>
@@ -128,39 +148,36 @@ export const Review = ({ currentUser }) => {
                 )}
             </section>
 
-            {entrees.length > 0 && (
+            {orderData.entrees.length > 0 && (
                 <div className="order-totals">
                     <p>Subtotal: ${subtotal.toFixed(2)}</p>
-                    {parseFloat(tip) > 0 && <p>Tip: ${parseFloat(tip).toFixed(2)}</p>}
-                    <p className="order-total">Total: ${total.toFixed(2)}</p>
+                    <p>Tip: ${parseFloat(tip).toFixed(2)}</p>
+                    <p>Total: ${total.toFixed(2)}</p>
                 </div>
             )}
 
             <div className="review-order-actions">
-                <button className="add-entree-btn" onClick={() => navigate("/order")}>
+                <button
+                    className="add-entree-btn"
+                    onClick={() => navigate("/order")}
+                >
                     Add New Entree
                 </button>
 
-                <div className="right-actions">
-                    {showTipInput ? (
-                        <div className="tip-input-group">
-                            <span>$</span>
-                            <input
-                                type="number"
-                                min="0"
-                                step="0.01"
-                                value={tip}
-                                onChange={(evt) => setTip(evt.target.value)}
-                                className="tip-input"
-                                placeholder="0.00"
-                                autoFocus
-                            />
-                        </div>
-                    ) : (
-                        <button className="tip-btn" onClick={() => setShowTipInput(true)}>
-                            Add Tip
-                        </button>
-                    )}
+                <div>
+                    <div className="tip-input-group">
+                        <label>Add Tip</label>
+                        <span>$</span>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value={tip}
+                            onChange={(evt) => setTip(evt.target.value)}
+                            className="tip-input"
+                            placeholder="0.00"
+                        />
+                    </div>
 
                     <button className="place-order-btn" onClick={handlePlaceOrder}>
                         Place Order
