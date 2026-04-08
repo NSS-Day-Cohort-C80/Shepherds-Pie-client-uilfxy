@@ -1,58 +1,70 @@
-import { useEffect, useState } from "react"
-import { Outlet, Route, Routes } from "react-router-dom"
-import { NavBar } from "../src/components/nav/NavBar"
-import { Welcome } from "../src/components/welcome/Welcome"
-import { Orders } from "../src/components/orders/Orders"
-import { Review } from "../src/components/review/Review"
+import { useEffect, useState } from "react";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { NavBar } from "../src/components/nav/NavBar";
+import { Welcome } from "../src/components/welcome/Welcome";
+import { Orders } from "../src/components/orders/Orders";
+import { Review } from "../src/components/review/Review";
 
 export const ApplicationViews = () => {
-    const [currentUser, setCurrentUser] = useState({})
-    const [orderData, setOrderData] = useState({
-        tableNumber: null,
-        deliveredBy: null,
-        entrees: []
-    })
+  const [currentUser, setCurrentUser] = useState({});
+  const [orderData, setOrderData] = useState({
+    tableNumber: null,
+    deliveredBy: null,
+    entrees: [],
+  });
 
-    useEffect(() => {
-        const localShepherdUser = localStorage.getItem("shepherd_user")
-        const shepherdUserObj = JSON.parse(localShepherdUser)
+  useEffect(() => {
+    const localShepherdUser = localStorage.getItem("shepherd_user");
+    const shepherdUserObj = JSON.parse(localShepherdUser);
 
-        setCurrentUser(shepherdUserObj)
-    }, [])
+    setCurrentUser(shepherdUserObj);
+  }, []);
 
-    return (
-        <Routes>
-            <Route
-                path="/"
-                element={
-                    <>
-                        <NavBar currentUser={currentUser} />
-                        <Outlet />
-                    </>
-                }
-            >
-                <Route index element={<Welcome currentUser={currentUser} />} />
-                <Route 
-                    path="order" 
-                    element={
-                        <Orders 
-                            currentUser={currentUser} 
-                            orderData={orderData} 
-                            setOrderData={setOrderData}
-                        />
-                    } 
-                />
-                <Route 
-                    path="review" 
-                    element={
-                        <Review 
-                            currentUser={currentUser} 
-                            orderData={orderData} 
-                            setOrderData={setOrderData}
-                        />
-                    } 
-                />
-            </Route>
-        </Routes>
-    )
-}
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <NavBar currentUser={currentUser} />
+            <Outlet />
+          </>
+        }
+      >
+        <Route index element={<Welcome currentUser={currentUser} />} />
+        <Route path="order">
+          <Route
+            index
+            element={
+              <Orders
+                currentUser={currentUser}
+                orderData={orderData}
+                setOrderData={setOrderData}
+              />
+            }
+          />
+          <Route
+            path=":index"
+            element={
+              <Orders
+                currentUser={currentUser}
+                orderData={orderData}
+                setOrderData={setOrderData}
+              />
+            }
+          />
+        </Route>
+        <Route
+          path="review"
+          element={
+            <Review
+              currentUser={currentUser}
+              orderData={orderData}
+              setOrderData={setOrderData}
+            />
+          }
+        />
+      </Route>
+    </Routes>
+  );
+};
