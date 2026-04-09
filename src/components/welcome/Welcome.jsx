@@ -21,7 +21,7 @@ export const Welcome = ({currentUser}) => {
     }
     return (
         <div className="welcome-container">
-            <h1><span id="">Welcome to</span>
+            <h1><span>Welcome to</span>
             <span>Shepherd's Pie</span>
             </h1>
             <button 

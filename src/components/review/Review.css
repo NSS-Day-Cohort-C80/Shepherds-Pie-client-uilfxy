@@ -1,0 +1,101 @@
+review-order-container {
+     margin: 2rem auto;
+  width: 60%;
+  text-align: center;
+  padding: 5rem 3rem;
+  border: 1px solid var(--outline);
+  background-color: #FFFDD0;
+  border-radius: 0.5rem; 
+}
+
+review-order-title{
+    display: flex;
+  flex-direction: column;
+  color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+pizza-list{
+     color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+pizza-cost {
+     color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+order-totals {
+       color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+pizza-item {
+       color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+edit-btn {
+color: rgb(8, 117, 32);
+ padding: 0.6rem 2rem;
+    font-size: 1rem;
+color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.edit-btn:hover {
+    background-color: rgb(5, 56, 4);
+}
+
+add-entree-btn {
+    color: rgb(8, 117, 32);
+ padding: 0.6rem 2rem;
+    font-size: 1rem;
+color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+add-entree-btn :hover {
+    background-color: rgb(5, 56, 4);
+}
+
+pizza-details {
+           color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+review-order-actions {
+     color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+tip-input{
+     color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+tip-input-group {
+     color: rgb(148, 6, 6);
+  font-family:"Comfortaa", Arial, sans-serif;
+}
+
+place-order-btn {
+    color: rgb(8, 117, 32);
+ padding: 0.6rem 2rem;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+place-order-btn:hover {
+    background-color: rgb(5, 56, 4);
+}
