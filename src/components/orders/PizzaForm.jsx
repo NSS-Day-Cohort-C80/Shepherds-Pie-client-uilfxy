@@ -100,7 +100,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
     <div>
       <div>
         <div>
-          <label for="size-options">Pick Your Size: </label>
+          <label htmlFor="size-options">Pick Your Size: </label>
           <select
             value={currentPizza.sizeId}
             id="size-options"
@@ -118,7 +118,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         </div>
 
         <div>
-          <label for="sauce-options">Pick Your Sauce: </label>
+          <label htmlFor="sauce-options">Pick Your Sauce: </label>
           <select
             value={currentPizza.sauceId}
             id="sauce-options"
@@ -136,7 +136,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         </div>
 
         <div>
-          <label for="cheese-options">Pick Your Cheese: </label>
+          <label htmlFor="cheese-options">Pick Your Cheese: </label>
           <select
             value={currentPizza.cheeseId}
             id="cheese-options"
@@ -161,7 +161,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
             {allToppings.map((topping) => {
               return (
                 <div key={topping.id}>
-                  <label for={topping.id}>{topping.name} </label>
+                  <label htmlFor={topping.id}>{topping.name} </label>
                   {/* A checkbox is checked if its id matches one already in currentPizza.toppingIds */}
                   <input
                     checked={currentPizza.toppingIds.some(
