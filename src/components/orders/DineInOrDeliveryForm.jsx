@@ -13,7 +13,6 @@ export const DineInOrDeliveryForm = ({
   useEffect(() => {
     getAllEmployees().then((employeesArray) => {
       setAllEmployees(employeesArray);
-      console.log("Employees set");
     });
   }, []);
 
@@ -41,12 +40,12 @@ export const DineInOrDeliveryForm = ({
     <div>
       <h2>Place an Order</h2>
 
-      {/* Dine In form */}
       <div>
         <button onClick={() => setShowDineInOnly(true)}>Dine In</button>
         <button onClick={() => setShowDineInOnly(false)}>Delivery</button>
       </div>
       <div>
+        {/* Dine In form displays by default */}
         {showDineInOnly ? (
           <div>
             <h4>Dine In</h4>
@@ -62,6 +61,7 @@ export const DineInOrDeliveryForm = ({
             </section>
           </div>
         ) : (
+          /* Clicking the Delivery button will hide Dine In and display Delivery form */
           <div>
             <h4>Delivery</h4>
 
