@@ -39,18 +39,18 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
     //calculates the total cost of one pizza (base size cost + all topping costs). entree and the toppingId/toppingIds arguments get entrees from the orderData.entrees.map array method used in the return jsx below
     const getBaseCostPrice = (entree) => {
         //const size = sizes.find((size) => size.id === entree.sizeId)
-        const size = findById(sizes, entree.sizeId)
+        const size = findById(sizes, parseInt(entree.sizeId))
         return size.baseCost
     }
 
     const getToppingCost = (toppingId) => {
-        const topping = findById(toppings, toppingId)
+        const topping = findById(toppings, parseInt(toppingId))
         return topping.cost
     }
 
     const getTotalToppingCost = (toppingIds) => {
-        return toppingIds.reduce((sumOfToppings, toppingId) => {
-            return sumOfToppings + getToppingCost(toppingId)
+        return toppingIds.reduce((sumOfToppings, toppingIds) => {
+            return sumOfToppings + getToppingCost(toppingIds)
         }, 0)
     }
 
@@ -62,14 +62,14 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
 
     //instead of writing this out in the return jsx, we can write a function here to make the pizza description string and call it in the return jsx. it goes through each item array and finds the matching id between the item and the entree itemId and pulls out the name of the matching item
     const formatEntreeDescription = (entree) => {
-        const sizeName = findById(sizes, entree.sizeId).name
-        const sauceName = findById(sauces, entree.sauceId).name
-        const cheeseName = findById(cheeses, entree.cheeseId).name
+        const sizeName = findById(sizes, parseInt(entree.sizeId)).name
+        const sauceName = findById(sauces, parseInt(entree.sauceId)).name
+        const cheeseName = findById(cheeses, parseInt(entree.cheeseId)).name
 
         //first we check if the entree has toppings, if it does we go through the entree.toppingIds array in orderData local storage and find the name of the topping that matches the toppingId attached to the entree, if the entree has no toppings we return no toppings. 
         const hasToppings = entree.toppingIds.length > 0
         const toppingNames = hasToppings
-            ? entree.toppingIds.map((toppingId) => findById(toppings, toppingId).name).join(", ")
+            ? entree.toppingIds.map((toppingId) => findById(toppings, parseInt(toppingId)).name).join(", ")
             : "no toppings"
 
         return `${sizeName} pizza with ${sauceName} sauce, ${cheeseName} cheese, and ${toppingNames}.`
