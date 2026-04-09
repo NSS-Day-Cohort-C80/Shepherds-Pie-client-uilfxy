@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllEmployees } from "../../services/userService";
+import { useParams } from "react-router-dom";
 
 export const DineInOrDeliveryForm = ({
   currentUser,
@@ -8,7 +9,7 @@ export const DineInOrDeliveryForm = ({
 }) => {
   const [showDineInOnly, setShowDineInOnly] = useState(true);
   const [allEmployees, setAllEmployees] = useState([]);
-  const [tableInput, setTableInput] = useState(0);
+  const { index } = useParams();
 
   useEffect(() => {
     getAllEmployees().then((employeesArray) => {
@@ -16,24 +17,28 @@ export const DineInOrDeliveryForm = ({
     });
   }, []);
 
+  useEffect(() => {
+    if (orderData.deliveredBy) {
+      setShowDineInOnly(false);
+    } else {
+      setShowDineInOnly(true);
+    }
+  }, [orderData]);
+
   const handleTableInput = (event) => {
-    const orderDataCopy = { ...orderData };
-
-    orderDataCopy.tableNumber = event.target.value;
-
-    setTableInput(event.target.value);
-    setOrderData(orderDataCopy);
+    setOrderData({
+      ...orderData,
+      tableNumber: event.target.value,
+      deliveredBy: null,
+    });
   };
 
   const handleDriverSelection = (event) => {
-    event.preventDefault();
-
-    const orderDataCopy = { ...orderData };
-
-    orderDataCopy.deliveredBy = event.target.value;
-
-    setTableInput(event.target.value);
-    setOrderData(orderDataCopy);
+    setOrderData({
+      ...orderData,
+      deliveredBy: parseInt(event.target.value),
+      tableNumber: "",
+    });
   };
 
   return (
@@ -41,40 +46,45 @@ export const DineInOrDeliveryForm = ({
       <h2>Place an Order</h2>
 
       <div>
-        <button onClick={() => setShowDineInOnly(true)}>Dine In</button>
-        <button onClick={() => setShowDineInOnly(false)}>Delivery</button>
+        <button type="button" onClick={() => setShowDineInOnly(true)}>
+          Dine In
+        </button>
+        <button type="button" onClick={() => setShowDineInOnly(false)}>
+          Delivery
+        </button>
       </div>
+
       <div>
-        {/* Dine In form displays by default */}
         {showDineInOnly ? (
           <div>
             <h4>Dine In</h4>
             <section>
-              <label>Enter table # </label>
+              <label htmlFor="table-number">Enter table # </label>
               <input
+                id="table-number"
                 onChange={handleTableInput}
                 type="text"
                 placeholder="Add table number"
-                value={tableInput}
+                value={orderData.tableNumber || ""}
                 required
               />
             </section>
           </div>
         ) : (
-          /* Clicking the Delivery button will hide Dine In and display Delivery form */
           <div>
             <h4>Delivery</h4>
-
             <section>
               <label htmlFor="employee-options">Assigned driver: </label>
               <select
                 id="employee-options"
-                onChange={(event) => handleDriverSelection(event)}
+                onChange={handleDriverSelection}
+                value={orderData.deliveredBy || ""}
+                required
               >
-                <option value="0">Select driver</option>
+                <option value="">Select driver</option>
                 {allEmployees.map((employee) => {
                   return (
-                    <option value={employee.id} key={employee.id} required>
+                    <option value={employee.id} key={employee.id}>
                       {employee.name}
                     </option>
                   );
