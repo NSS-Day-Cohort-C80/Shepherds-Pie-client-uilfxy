@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getAllEmployees } from "../../services/userService";
 import { useParams } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button" 
 
 export const DineInOrDeliveryForm = ({
   currentUser,
@@ -42,24 +44,24 @@ export const DineInOrDeliveryForm = ({
   };
 
   return (
-    <div>
-      <h2>Place an Order</h2>
+    <>
+      <Form.Label>Place an Order</Form.Label>
 
-      <div>
-        <button type="button" onClick={() => setShowDineInOnly(true)}>
+      <Form.Group className="form-buttons">
+        <Button type="button" onClick={() => setShowDineInOnly(true)}>
           Dine In
-        </button>
-        <button type="button" onClick={() => setShowDineInOnly(false)}>
+        </Button>
+        <Button type="button" onClick={() => setShowDineInOnly(false)}>
           Delivery
-        </button>
-      </div>
+        </Button>
+      </Form.Group>
 
       <div>
         {showDineInOnly ? (
           <div>
-            <h4>Dine In</h4>
-            <section>
-              <label htmlFor="table-number">Enter table # </label>
+            <Form.Label>Dine In</Form.Label>
+            <Form.Group>
+              <Form.Label htmlFor="table-number">Enter table # </Form.Label>
               <input
                 id="table-number"
                 onChange={handleTableInput}
@@ -68,13 +70,13 @@ export const DineInOrDeliveryForm = ({
                 value={orderData.tableNumber || ""}
                 required
               />
-            </section>
+            </Form.Group>
           </div>
         ) : (
           <div>
-            <h4>Delivery</h4>
-            <section>
-              <label htmlFor="employee-options">Assigned driver: </label>
+            <Form.Label>Delivery</Form.Label>
+            <Form.Group>
+              <Form.Label htmlFor="employee-options">Assigned driver: </Form.Label>
               <select
                 id="employee-options"
                 onChange={handleDriverSelection}
@@ -90,10 +92,10 @@ export const DineInOrDeliveryForm = ({
                   );
                 })}
               </select>
-            </section>
+            </Form.Group>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };

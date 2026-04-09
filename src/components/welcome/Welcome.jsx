@@ -21,9 +21,9 @@ export const Welcome = ({currentUser}) => {
     }
     return (
         <div className="welcome-container">
-            <h1><span id="">Welcome to</span>
-            <span>Shepherd's Pie</span>
+            <h1>Welcome to
             </h1>
+            <img src="/PizzaLogo.png" alt="Shepherds-Pie-Logo"/>
             <button 
             onClick={handleCreateOrder} 
             className="welcome-btn">

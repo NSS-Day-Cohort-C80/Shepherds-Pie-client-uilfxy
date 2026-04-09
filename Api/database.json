@@ -21,7 +21,24 @@
       "email": "firefeet@goingmerry.edu"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "createdBy": 4,
+      "tableNumber": 0,
+      "deliveredBy": 0,
+      "timeStamp": "2026-04-09T19:02:34.379Z",
+      "tip": 0,
+      "id": 1
+    },
+    {
+      "createdBy": 4,
+      "tableNumber": 0,
+      "deliveredBy": 0,
+      "timeStamp": "2026-04-09T19:19:19.904Z",
+      "tip": 0,
+      "id": 2
+    }
+  ],
   "entrees": [],
   "sizes": [
     {

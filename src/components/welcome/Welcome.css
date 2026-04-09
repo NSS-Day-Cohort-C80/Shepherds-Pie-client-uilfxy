@@ -1,10 +1,13 @@
 .welcome-container {
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
     margin: 2rem auto;
   width: 60%;
   text-align: center;
   padding: 5rem 3rem;
   border: 1px solid var(--outline);
-  background-color: #FFFDD0;
+  background-color: #FFEABF;
   border-radius: 0.5rem; 
 }
 
@@ -28,4 +31,9 @@
 
 .welcome-btn:hover {
     background-color: rgb(100, 4, 4);
+}
+.welcome-container img {
+  height: 300px ;
+  width: 300px;
+
 }

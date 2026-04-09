@@ -1,7 +1,7 @@
   .navbar {
     display: flex;
     flex-wrap: nowrap;
-    background-color: rgb(8, 117, 32);
+    background-color: #023A25;
     margin: 0;
     width: 100%;
     padding: 0.5rem;
@@ -10,10 +10,10 @@
     flex-basis: 20%;
     list-style-type: none;
     text-align: center;
-    color: rgb(146, 3, 3);
   }
   .navbar-link {
     text-decoration: none;
     font-family: "Comfortaa", Arial, sans-serif;
     letter-spacing: 1px;
+    color: #FFEABF
   }
