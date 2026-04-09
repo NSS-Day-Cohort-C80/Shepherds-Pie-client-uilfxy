@@ -66,7 +66,7 @@ export const DineInOrDeliveryForm = ({
             <h4>Delivery</h4>
 
             <section>
-              <label for="employee-options">Assigned driver: </label>
+              <label htmlFor="employee-options">Assigned driver: </label>
               <select
                 id="employee-options"
                 onChange={(event) => handleDriverSelection(event)}
