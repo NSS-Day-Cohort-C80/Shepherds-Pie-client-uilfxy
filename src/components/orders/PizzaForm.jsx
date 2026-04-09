@@ -3,7 +3,7 @@ import { getAllSauces } from "../../services/sauceService";
 import { getAllCheeses } from "../../services/cheeseService";
 import { getAllToppings } from "../../services/toppingsService";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   const [allSizes, setAllSizes] = useState([]);
@@ -11,7 +11,15 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   const [allCheeses, setAllCheeses] = useState([]);
   const [allToppings, setAllToppings] = useState([]);
   const [selectedToppings, setSelectedToppings] = useState([]);
-  const [currentPizza, setCurrentPizza] = useState({ sizeId: 0, sauceId: 0, cheeseId: 0, toppingIds: [] })
+  const [currentPizza, setCurrentPizza] = useState({
+    sizeId: 0,
+    sauceId: 0,
+    cheeseId: 0,
+    toppingIds: [],
+  });
+
+  // Will give me the /order/index value from editing an order
+  const { index } = useParams();
 
   useEffect(() => {
     getAllSizes().then((sizesArray) => {
@@ -34,21 +42,21 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   }, []);
 
   const handleSizeSelection = (event) => {
-    const currentPizzaCopy = { ...currentPizza }
+    const currentPizzaCopy = { ...currentPizza };
     currentPizzaCopy.sizeId = event.target.value;
-    setCurrentPizza(currentPizzaCopy)
+    setCurrentPizza(currentPizzaCopy);
   };
 
   const handleSauceSelection = (event) => {
-    const currentPizzaCopy = { ...currentPizza }
+    const currentPizzaCopy = { ...currentPizza };
     currentPizzaCopy.sauceId = event.target.value;
-    setCurrentPizza(currentPizzaCopy)
+    setCurrentPizza(currentPizzaCopy);
   };
 
   const handleCheeseSelection = (event) => {
-    const currentPizzaCopy = { ...currentPizza }
+    const currentPizzaCopy = { ...currentPizza };
     currentPizzaCopy.cheeseId = event.target.value;
-    setCurrentPizza(currentPizzaCopy)
+    setCurrentPizza(currentPizzaCopy);
   };
 
   const handleToppingsSelection = (event) => {
@@ -73,13 +81,19 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
 
   const handleAddEntree = (event) => {
     const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
-    orderDataCopy.entrees.push(currentPizza)
-    setOrderData(orderDataCopy)
-    setCurrentPizza({ sizeId: 0, sauceId: 0, cheeseId: 0, toppingIds: [] })
-    setSelectedToppings([])
-  }
+    orderDataCopy.entrees.push(currentPizza);
+    setOrderData(orderDataCopy);
+    setCurrentPizza({ sizeId: 0, sauceId: 0, cheeseId: 0, toppingIds: [] });
+    setSelectedToppings([]);
+  };
 
-  const navigate = useNavigate()
+  const handleUpdateOrder = (event) => {
+    const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
+    orderDataCopy.entrees[index] = currentPizza
+    setOrderData(orderDataCopy);
+  };
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -147,7 +161,9 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
                 <div key={topping.id}>
                   <label for={topping.id}>{topping.name} </label>
                   <input
-                    checked={currentPizza.toppingIds.some((id) => parseInt(id) === topping.id)}
+                    checked={currentPizza.toppingIds.some(
+                      (id) => parseInt(id) === topping.id,
+                    )}
                     type="checkbox"
                     name="topping"
                     id={topping.id}
@@ -162,9 +178,18 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
       </div>
 
       <div>
-        <button onClick={() => { navigate("/review") }}>Review Order</button>
-        <button onClick={handleAddEntree}>Add Entree</button>
-        <button >Update Order</button>
+        <button
+          onClick={() => {
+            navigate("/review");
+          }}
+        >
+          Review Order
+        </button>
+        {index ? (
+          <button onClick={handleUpdateOrder}>Update Order</button>
+        ) : (
+          <button onClick={handleAddEntree}>Add Entree</button>
+        )}
       </div>
     </div>
   );
