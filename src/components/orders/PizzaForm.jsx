@@ -87,9 +87,10 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
     setSelectedToppings([]);
   };
 
+  // Replace the existing entree at position index in orderData.entrees with the updated currentPizza
   const handleUpdateOrder = (event) => {
     const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
-    orderDataCopy.entrees[index] = currentPizza
+    orderDataCopy.entrees[index] = currentPizza;
     setOrderData(orderDataCopy);
   };
 
@@ -156,10 +157,12 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         <h4>Choose Your Toppings</h4>
         <section>
           <div>
+            {/* Map over all toppings to render a labeled checkbox for each one. */}
             {allToppings.map((topping) => {
               return (
                 <div key={topping.id}>
                   <label for={topping.id}>{topping.name} </label>
+                  {/* A checkbox is checked if its id matches one already in currentPizza.toppingIds */}
                   <input
                     checked={currentPizza.toppingIds.some(
                       (id) => parseInt(id) === topping.id,
@@ -185,6 +188,8 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         >
           Review Order
         </button>
+        {/* Use index to determine whether the user came from the Edit button on /review or not. 
+        If index has a value, the user is editing and updating an order */}
         {index ? (
           <button onClick={handleUpdateOrder}>Update Order</button>
         ) : (
