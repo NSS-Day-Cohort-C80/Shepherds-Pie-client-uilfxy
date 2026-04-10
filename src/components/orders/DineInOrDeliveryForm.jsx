@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { getAllEmployees } from "../../services/userService";
 import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button" 
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import "./DineInOrDeliveryForm.css"
 
 export const DineInOrDeliveryForm = ({
   currentUser,
@@ -44,58 +48,61 @@ export const DineInOrDeliveryForm = ({
   };
 
   return (
-    <>
-      <Form.Label>Place an Order</Form.Label>
-
-      <Form.Group className="form-buttons">
-        <Button type="button" onClick={() => setShowDineInOnly(true)}>
-          Dine In
-        </Button>
-        <Button type="button" onClick={() => setShowDineInOnly(false)}>
-          Delivery
-        </Button>
-      </Form.Group>
-
-      <div>
-        {showDineInOnly ? (
+    <Container>
+      <Row>
+        <Col>
+          <Button className="ddd-buttons" type="button" onClick={() => setShowDineInOnly(true)}>
+            Dine In
+          </Button>
+          <Button className="ddd-buttons" type="button" onClick={() => setShowDineInOnly(false)}>
+            Delivery
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <div>
-            <Form.Label>Dine In</Form.Label>
-            <Form.Group>
-              <Form.Label htmlFor="table-number">Enter table # </Form.Label>
-              <input
-                id="table-number"
-                onChange={handleTableInput}
-                type="text"
-                placeholder="Add table number"
-                value={orderData.tableNumber || ""}
-                required
-              />
-            </Form.Group>
+            {showDineInOnly ? (
+              <div>
+                <h3>Dine In</h3>
+                <div>
+                  <label htmlFor="table-number">Table</label>
+                  <input
+                    id="table-number"
+                    onChange={handleTableInput}
+                    type="text"
+                    placeholder="Add table number"
+                    value={orderData.tableNumber || ""}
+                    required
+                  />
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h3>Delivery</h3>
+                <div>
+                  <label htmlFor="employee-options">Assigned driver: </label>
+                  <select
+                    id="employee-options"
+                    onChange={handleDriverSelection}
+                    value={orderData.deliveredBy || ""}
+                    required
+                  >
+                    <option value="">Select driver</option>
+                    {allEmployees.map((employee) => {
+                      return (
+                        <option value={employee.id} key={employee.id}>
+                          {employee.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            )}
           </div>
-        ) : (
-          <div>
-            <Form.Label>Delivery</Form.Label>
-            <Form.Group>
-              <Form.Label htmlFor="employee-options">Assigned driver: </Form.Label>
-              <select
-                id="employee-options"
-                onChange={handleDriverSelection}
-                value={orderData.deliveredBy || ""}
-                required
-              >
-                <option value="">Select driver</option>
-                {allEmployees.map((employee) => {
-                  return (
-                    <option value={employee.id} key={employee.id}>
-                      {employee.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </Form.Group>
-          </div>
-        )}
-      </div>
-    </>
+        </Col>
+      </Row>
+    </Container>
   );
 };

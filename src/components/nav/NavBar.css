@@ -1,7 +1,9 @@
+  @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
   .navbar {
     display: flex;
     flex-wrap: nowrap;
-    background-color: #023A25;
+    background-color: #023a25;
     margin: 0;
     width: 100%;
     padding: 0.5rem;
@@ -13,7 +15,8 @@
   }
   .navbar-link {
     text-decoration: none;
-    font-family: "Comfortaa", Arial, sans-serif;
-    letter-spacing: 1px;
-    color: #FFEABF
+    font-family: "Chewy", system-ui;
+    font-weight: 100;
+    font-style: normal;
+    color: #fdf9f2;
   }

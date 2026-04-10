@@ -1,9 +1,14 @@
-form-button {
-background-color: #FDF3DE;
-color: #333333;
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.form-button {
+    margin: 0 6px;
+    background-color: #023a25 !important;
+    color: #fdf9f2 !important;
 }
 
-form-button:active {
-  color: red;
+.review-order-button {
+    margin: 0 6px;
+    background-color: #780201 !important;
+    color: #fdf9f2 !important;
 }
 

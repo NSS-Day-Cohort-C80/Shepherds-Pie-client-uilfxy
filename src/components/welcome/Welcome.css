@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings: "width" 100;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h2 {
+    text-align: center;
+    padding-bottom: 1rem;
+    color: #023a25 !important;
+    font-family: "Chewy", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
 .welcome-container {
   display: flex;
   align-items: center;
@@ -7,26 +28,35 @@
   text-align: center;
   padding: 5rem 3rem;
   border: 1px solid var(--outline);
-  background-color: #FFEABF;
-  border-radius: 0.5rem; 
+  background-color: #fcf3e4;
+  border-radius: 16px;
 }
 
 .welcome-container > h1 {
   display: flex;
   flex-direction: column;
-  color: rgb(148, 6, 6);
-  font-family:"Comfortaa", Arial, sans-serif;
+  color: #780201;
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .welcome-btn {
     padding: 0.6rem 2rem;
+    margin-top: 2rem;
     font-size: 1rem;
-    background-color: rgb(148, 6, 6);
-    color: white;
+    background-color: #780201;
+    color: #fdf9f2;
     border: none;
-    border-radius: 0.25rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings: "width" 100;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .welcome-btn:hover {

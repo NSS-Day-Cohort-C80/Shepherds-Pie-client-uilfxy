@@ -7,6 +7,8 @@ import { getAllToppings } from "../../services/toppingsService"
 import { createOrder } from "../../services/orderService"
 import { createEntree } from "../../services/entreeService"
 import { createEntreeTopping } from "../../services/entreeToppingsService"
+import { Col, Container, Row, Form, Button } from "react-bootstrap"
+import "./Review.css"
 
 export const Review = ({ currentUser, orderData, setOrderData }) => {
     const [sizes, setSizes] = useState([])
@@ -133,69 +135,75 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
 
     //the index thats used in the orderData.entrees.map array method refers to the position of the entree in the array (array index number). also, orderData.entrees.map loops through each entree in the orderData obj and passes them one at a time into the helper functions defined above
     return (
-        <main className="review-order-container">
-            <h1 className="review-order-title">Review Order</h1>
-
+      <Form.Group className="welcome-container">
+        <Row>
+          <Col>
+            <h1>Review Order</h1>
             <section className="pizza-list">
-                {!orderData.entrees.length ? (
-                    <p className="empty-msg">No pizzas added yet.</p>
-                ) : (
-                    orderData.entrees.map((entree, index) => (
-                        <div key={index} className="pizza-item">
-                            <button
-                                className="edit-btn"
-                                onClick={() => navigate(`/order/${index}`)}
-                            >
-                                Edit
-                            </button>
-                            <div className="pizza-details">
-                                <p>{formatEntreeDescription(entree)}</p>
-                                <p className="pizza-cost">
-                                    ${getEntreeCost(entree).toFixed(2)}
-                                </p>
-                            </div>
-                        </div>
-                    ))
-                )}
+              {!orderData.entrees.length ? (
+                <p className="empty-msg">No pizzas added yet.</p>
+              ) : (
+                orderData.entrees.map((entree, index) => (
+                  <div key={index} className="pizza-item">
+                    <Button
+                      className="edit-btn"
+                      onClick={() => navigate(`/order/${index}`)}
+                    >
+                      Edit
+                    </Button>
+                    <div className="pizza-details">
+                      <p>{formatEntreeDescription(entree)}</p>
+                      <p className="pizza-cost">
+                        ${getEntreeCost(entree).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              )}
             </section>
 
             {orderData.entrees.length > 0 && (
-                <div className="order-totals">
-                    <p>Subtotal: {subtotalPrice}</p>
-                    {orderData.deliveredBy && <p>Delivery charge : $5.00</p>}
-                    {tip && <p>Tip: ${parseFloat(tip).toFixed(2)}</p>}
-                    <p>Total: {totalPrice}</p>
-                </div>
+              <div className="order-totals">
+                <p>Subtotal: {subtotalPrice}</p>
+                {orderData.deliveredBy && <p>Delivery charge : $5.00</p>}
+                {tip && <p>Tip: ${parseFloat(tip).toFixed(2)}</p>}
+                <p>Total: {totalPrice}</p>
+              </div>
             )}
-
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <div className="review-order-actions">
-                <button
-                    className="add-entree-btn"
-                    onClick={() => navigate("/order")}
-                >
-                    Add New Entree
-                </button>
+              <Button
+                className="review-buttons"
+                onClick={() => navigate("/order")}
+              >
+                Add New Entree
+              </Button>
 
-                <div>
-                    <div className="tip-input-group">
-                        <label>Add Tip</label>
-                        <span>$</span>
-                        <input
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            value={tip}
-                            onChange={(evt) => setTip(evt.target.value)}
-                            className="tip-input"
-                            placeholder="1.00"
-                        />
-                    </div>
-
-                    <button className="place-order-btn" onClick={handlePlaceOrder}>
-                        Place Order
-                    </button>
+              <div>
+                <div className="tip-input-group">
+                  <Form.Label>Add Tip </Form.Label>
+                  <span>$</span>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={tip}
+                    onChange={(evt) => setTip(evt.target.value)}
+                    className="tip-input"
+                    placeholder="1.00"
+                  />
                 </div>
+
+                <Button className="review-buttons" onClick={handlePlaceOrder}>
+                  Place Order
+                </Button>
+              </div>
             </div>
-        </main>
-    )
+          </Col>
+        </Row>
+      </Form.Group>
+    );
 }

@@ -149,9 +149,9 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         ))}
       </Form.Group>
 
-      <div className="d-flex gap-2 form-button">
+      <div className="d-flex gap-2">
         <Button
-          variant="secondary"
+          className="review-order-button"
           type="button"
           onClick={() => {
             navigate("/review");
@@ -161,11 +161,11 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
         </Button>
 
         {index ? (
-          <Button variant="primary" type="button" onClick={handleUpdateOrder}>
+          <Button className="form-button" type="button" onClick={handleUpdateOrder}>
             Update Order
           </Button>
         ) : (
-          <Button variant="success" type="button" onClick={handleAddEntree}>
+          <Button className="form-button" type="button" onClick={handleAddEntree}>
             Add Entree
           </Button>
         )}
