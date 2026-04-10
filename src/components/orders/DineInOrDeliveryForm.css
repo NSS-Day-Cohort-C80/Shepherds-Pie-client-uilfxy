@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Open Sans", sans-serif !important;
   font-optical-sizing: auto;
   font-weight: 100;
   font-style: normal;
@@ -94,8 +94,6 @@ h3 {
   border-color: #ff0000;
   box-shadow: 0 0 0 0.2rem rgba(215, 107, 0, 0.2);
 }
-
-
 
 .ddd-buttons {
     margin: 0 6px;

@@ -49,7 +49,7 @@ export const DineInOrDeliveryForm = ({
       <Card.Body className="dine-card-body">
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
           <div>
-            <h4 className="dine-card-title mb-1">Order Type</h4>
+            <h3 className="mb-1">Order Type</h3>
             <p className="dine-card-subtitle mb-0">
               Select how this order will be fulfilled
             </p>
@@ -57,6 +57,7 @@ export const DineInOrDeliveryForm = ({
 
           <ButtonGroup className="dine-toggle-group">
             <Button
+              className="ddd-buttons"
               type="button"
               variant={showDineInOnly ? "success" : "outline-success"}
               onClick={() => setShowDineInOnly(true)}
@@ -64,6 +65,7 @@ export const DineInOrDeliveryForm = ({
               Dine In
             </Button>
             <Button
+              className="ddd-buttons"
               type="button"
               variant={!showDineInOnly ? "success" : "outline-success"}
               onClick={() => setShowDineInOnly(false)}
