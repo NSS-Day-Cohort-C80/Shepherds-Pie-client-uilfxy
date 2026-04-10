@@ -61,9 +61,63 @@
       "timeStamp": "2026-04-10T14:08:32.462Z",
       "tip": 0,
       "id": 5
+    },
+    {
+      "tableNumber": "143",
+      "createdBy": 4,
+      "deliveredBy": null,
+      "timeStamp": "2026-04-10T14:45:38.932Z",
+      "tipAmount": 1540,
+      "id": 6
+    },
+    {
+      "createdBy": 4,
+      "tableNumber": 0,
+      "deliveredBy": 0,
+      "timeStamp": "2026-04-10T14:45:49.384Z",
+      "tip": 0,
+      "id": 7
+    },
+    {
+      "tableNumber": "123",
+      "createdBy": 4,
+      "deliveredBy": null,
+      "timeStamp": "2026-04-10T14:46:25.498Z",
+      "tipAmount": 12,
+      "id": 8
+    },
+    {
+      "tableNumber": "123",
+      "createdBy": 4,
+      "deliveredBy": null,
+      "timeStamp": "2026-04-10T14:51:41.282Z",
+      "tipAmount": 145,
+      "id": 9
     }
   ],
-  "entrees": [],
+  "entrees": [
+    {
+      "orderId": 6,
+      "sizeId": 1,
+      "cheeseId": 3,
+      "sauceId": 3,
+      "id": 1
+    },
+    {
+      "orderId": 8,
+      "sizeId": 2,
+      "cheeseId": 3,
+      "sauceId": 2,
+      "id": 2
+    },
+    {
+      "orderId": 9,
+      "sizeId": 2,
+      "cheeseId": 3,
+      "sauceId": 4,
+      "id": 3
+    }
+  ],
   "sizes": [
     {
       "id": 1,
@@ -138,7 +192,58 @@
       "cost": 0.75
     }
   ],
-  "entreeToppings": [],
+  "entreeToppings": [
+    {
+      "entreeId": 1,
+      "toppingId": 1,
+      "id": 1
+    },
+    {
+      "entreeId": 1,
+      "toppingId": 3,
+      "id": 2
+    },
+    {
+      "entreeId": 1,
+      "toppingId": 5,
+      "id": 3
+    },
+    {
+      "entreeId": 1,
+      "toppingId": 7,
+      "id": 4
+    },
+    {
+      "entreeId": 2,
+      "toppingId": 5,
+      "id": 5
+    },
+    {
+      "entreeId": 2,
+      "toppingId": 3,
+      "id": 6
+    },
+    {
+      "entreeId": 2,
+      "toppingId": 1,
+      "id": 7
+    },
+    {
+      "entreeId": 3,
+      "toppingId": 1,
+      "id": 8
+    },
+    {
+      "entreeId": 3,
+      "toppingId": 3,
+      "id": 9
+    },
+    {
+      "entreeId": 3,
+      "toppingId": 5,
+      "id": 10
+    }
+  ],
   "cheeses": [
     {
       "id": 1,

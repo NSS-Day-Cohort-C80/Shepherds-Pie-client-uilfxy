@@ -33,8 +33,18 @@
 .pizza-toppings-body {
   background-color: #ffeabf;
   padding: 1.25rem;
+  border-color: #208427;
 }
 
+.pizza-toppings-body .form-check-input:checked {
+  background-color: #208427;
+  border-color: #208427;
+}
+
+.pizza-toppings-body .form-check-input:focus {
+  border-color: #208427;
+  box-shadow: 0 0 0 0.2rem rgba(32, 132, 39, 0.2);
+}
 .pizza-form-label {
   font-weight: 600;
   color: #3b2a20;

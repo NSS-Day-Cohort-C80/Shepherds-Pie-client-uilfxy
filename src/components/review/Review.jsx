@@ -123,8 +123,12 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
       }
     }
 
-    setOrderData({ entrees: [] });
-    navigate("/");
+setOrderData({
+  entrees: [],
+  tableNumber: "",
+  deliveredBy: 0,
+});
+navigate("/order-complete");
   };
 
   return (
