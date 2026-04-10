@@ -133,7 +133,7 @@ export const Review = ({ currentUser, orderData, setOrderData }) => {
         <Card className="review-main-card shadow-lg border-0">
           <Card.Body className="review-main-body">
             <div className="text-center mb-4">
-              <h1 className="review-page-title">Review Order</h1>
+              <h1>Review Order</h1>
             </div>
 
             <Card className="review-list-card mb-4">

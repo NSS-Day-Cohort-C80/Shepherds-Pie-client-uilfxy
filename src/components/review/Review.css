@@ -1,6 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-bottom: 1rem;
+  color: #023a25 !important;
+  font-family: "Chewy", system-ui !important;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .review-page {
   min-height: 100vh;
-  background-color: #ffeabf;
   padding-top: 1rem;
 }
 
@@ -73,6 +85,15 @@
 .review-place-btn {
   border-radius: 12px;
   font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease !important;
+}
+
+.review-edit-btn:hover,
+.review-add-btn:hover,
+.review-place-btn:hover {
+background-color: #023a25 !important;
+  color: #fdf9f2 !important;
 }
 
 .review-totals-body p {
