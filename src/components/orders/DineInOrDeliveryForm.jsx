@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getAllEmployees } from "../../services/userService";
-import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button" 
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Card from "react-bootstrap/Card";
+import "./DineInOrDeliveryForm.css";
 
 export const DineInOrDeliveryForm = ({
   currentUser,
@@ -11,7 +13,6 @@ export const DineInOrDeliveryForm = ({
 }) => {
   const [showDineInOnly, setShowDineInOnly] = useState(true);
   const [allEmployees, setAllEmployees] = useState([]);
-  const { index } = useParams();
 
   useEffect(() => {
     getAllEmployees().then((employeesArray) => {
@@ -44,58 +45,79 @@ export const DineInOrDeliveryForm = ({
   };
 
   return (
-    <>
-      <Form.Label>Place an Order</Form.Label>
-
-      <Form.Group className="form-buttons">
-        <Button type="button" onClick={() => setShowDineInOnly(true)}>
-          Dine In
-        </Button>
-        <Button type="button" onClick={() => setShowDineInOnly(false)}>
-          Delivery
-        </Button>
-      </Form.Group>
-
-      <div>
-        {showDineInOnly ? (
+    <Card className="dine-card-shell mb-4">
+      <Card.Body className="dine-card-body">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
           <div>
-            <Form.Label>Dine In</Form.Label>
-            <Form.Group>
-              <Form.Label htmlFor="table-number">Enter table # </Form.Label>
-              <input
-                id="table-number"
-                onChange={handleTableInput}
-                type="text"
-                placeholder="Add table number"
-                value={orderData.tableNumber || ""}
-                required
-              />
-            </Form.Group>
+            <h4 className="dine-card-title mb-1">Order Type</h4>
+            <p className="dine-card-subtitle mb-0">
+              Select how this order will be fulfilled
+            </p>
           </div>
+
+          <ButtonGroup className="dine-toggle-group">
+            <Button
+              type="button"
+              variant={showDineInOnly ? "success" : "outline-success"}
+              onClick={() => setShowDineInOnly(true)}
+            >
+              Dine In
+            </Button>
+            <Button
+              type="button"
+              variant={!showDineInOnly ? "success" : "outline-success"}
+              onClick={() => setShowDineInOnly(false)}
+            >
+              Delivery
+            </Button>
+          </ButtonGroup>
+        </div>
+
+        {showDineInOnly ? (
+          <Card className="dine-mode-panel dine-mode-in border-0">
+            <Card.Body className="dine-mode-body">
+              <h5 className="dine-mode-title">Dine In</h5>
+              <Form.Group>
+                <Form.Label className="dine-label" htmlFor="table-number">
+                  Enter table number
+                </Form.Label>
+                <Form.Control
+                  className="dine-input"
+                  id="table-number"
+                  type="text"
+                  placeholder="Add table number"
+                  value={orderData.tableNumber || ""}
+                  onChange={handleTableInput}
+                />
+              </Form.Group>
+            </Card.Body>
+          </Card>
         ) : (
-          <div>
-            <Form.Label>Delivery</Form.Label>
-            <Form.Group>
-              <Form.Label htmlFor="employee-options">Assigned driver: </Form.Label>
-              <select
-                id="employee-options"
-                onChange={handleDriverSelection}
-                value={orderData.deliveredBy || ""}
-                required
-              >
-                <option value="">Select driver</option>
-                {allEmployees.map((employee) => {
-                  return (
+          <Card className="dine-mode-panel dine-mode-delivery border-0">
+            <Card.Body className="dine-mode-body">
+              <h5 className="dine-mode-title">Delivery</h5>
+              <Form.Group>
+                <Form.Label className="dine-label" htmlFor="employee-options">
+                  Assigned driver
+                </Form.Label>
+                <Form.Select
+                  className="dine-select"
+                  id="employee-options"
+                  value={orderData.deliveredBy || ""}
+                  onChange={handleDriverSelection}
+                >
+                  <option value="">Select driver</option>
+                  {allEmployees.map((employee) => (
                     <option value={employee.id} key={employee.id}>
                       {employee.name}
                     </option>
-                  );
-                })}
-              </select>
-            </Form.Group>
-          </div>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Card.Body>
+          </Card>
         )}
-      </div>
-    </>
+      </Card.Body>
+    </Card>
   );
 };

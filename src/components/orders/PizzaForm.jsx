@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "./PizzaForm.css"
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "./PizzaForm.css";
 
 export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   const [allSizes, setAllSizes] = useState([]);
@@ -85,91 +88,122 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   };
 
   return (
-    <div>
-      <Form.Group className="mb-3">
-        <Form.Label htmlFor="size-options">Pick Your Size:</Form.Label>
-        <Form.Select
-          id="size-options"
-          value={currentPizza.sizeId}
-          onChange={handleSizeSelection}
-        >
-          <option value={0}>Select size</option>
-          {allSizes.map((size) => (
-            <option value={size.id} key={size.id}>
-              {size.name}
-            </option>
-          ))}
-        </Form.Select>
-      </Form.Group>
+    <Card className="pizza-section-card">
+      <Card.Body className="pizza-section-body">
+        <div className="mb-4">
+          <h4 className="pizza-section-title mb-1">Pizza Details</h4>
+          <p className="pizza-section-subtitle mb-0">
+            Build your pizza by choosing size, sauce, cheese, and toppings
+          </p>
+        </div>
 
-      <Form.Group className="mb-3">
-        <Form.Label htmlFor="sauce-options">Pick Your Sauce:</Form.Label>
-        <Form.Select
-          id="sauce-options"
-          value={currentPizza.sauceId}
-          onChange={handleSauceSelection}
-        >
-          <option value={0}>Select sauce</option>
-          {allSauces.map((sauce) => (
-            <option value={sauce.id} key={sauce.id}>
-              {sauce.name}
-            </option>
-          ))}
-        </Form.Select>
-      </Form.Group>
+        <Row className="g-3 mb-4">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label className="pizza-form-label" htmlFor="size-options">
+                Pick Your Size
+              </Form.Label>
+              <Form.Select
+                className="pizza-select"
+                id="size-options"
+                value={currentPizza.sizeId}
+                onChange={handleSizeSelection}
+              >
+                <option value={0}>Select size</option>
+                {allSizes.map((size) => (
+                  <option value={size.id} key={size.id}>
+                    {size.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
 
-      <Form.Group className="mb-3">
-        <Form.Label htmlFor="cheese-options">Pick Your Cheese:</Form.Label>
-        <Form.Select
-          id="cheese-options"
-          value={currentPizza.cheeseId}
-          onChange={handleCheeseSelection}
-        >
-          <option value={0}>Select cheese</option>
-          {allCheeses.map((cheese) => (
-            <option value={cheese.id} key={cheese.id}>
-              {cheese.name}
-            </option>
-          ))}
-        </Form.Select>
-      </Form.Group>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label className="pizza-form-label" htmlFor="sauce-options">
+                Pick Your Sauce
+              </Form.Label>
+              <Form.Select
+                className="pizza-select"
+                id="sauce-options"
+                value={currentPizza.sauceId}
+                onChange={handleSauceSelection}
+              >
+                <option value={0}>Select sauce</option>
+                {allSauces.map((sauce) => (
+                  <option value={sauce.id} key={sauce.id}>
+                    {sauce.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
 
-      <Form.Group className="mb-4">
-        <Form.Label>Choose Your Toppings</Form.Label>
-        {allToppings.map((topping) => (
-          <Form.Check
-            key={topping.id}
-            type="checkbox"
-            id={`topping-${topping.id}`}
-            label={topping.name}
-            value={topping.id}
-            checked={currentPizza.toppingIds.includes(topping.id)}
-            onChange={handleToppingsSelection}
-          />
-        ))}
-      </Form.Group>
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label className="pizza-form-label" htmlFor="cheese-options">
+                Pick Your Cheese
+              </Form.Label>
+              <Form.Select
+                className="pizza-select"
+                id="cheese-options"
+                value={currentPizza.cheeseId}
+                onChange={handleCheeseSelection}
+              >
+                <option value={0}>Select cheese</option>
+                {allCheeses.map((cheese) => (
+                  <option value={cheese.id} key={cheese.id}>
+                    {cheese.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+        </Row>
 
-      <div className="d-flex gap-2 form-button">
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => {
-            navigate("/review");
-          }}
-        >
-          Review Order
-        </Button>
+        <Card className="pizza-toppings-card border-0 mb-4">
+          <Card.Body className="pizza-toppings-body">
+            <Form.Label className="pizza-form-label mb-3">
+              Choose Your Toppings
+            </Form.Label>
+            <Row xs={1} sm={2} md={2}>
+              {allToppings.map((topping) => (
+                <Col key={topping.id} className="mb-2">
+                  <Form.Check
+                    type="checkbox"
+                    id={`topping-${topping.id}`}
+                    label={topping.name}
+                    value={topping.id}
+                    checked={currentPizza.toppingIds.includes(topping.id)}
+                    onChange={handleToppingsSelection}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </Card.Body>
+        </Card>
 
-        {index ? (
-          <Button variant="primary" type="button" onClick={handleUpdateOrder}>
-            Update Order
+        <div className="pizza-button-row">
+          <Button
+            variant="success"
+            type="button"
+            onClick={() => navigate("/review")}
+          >
+            Review Order
           </Button>
-        ) : (
-          <Button variant="success" type="button" onClick={handleAddEntree}>
-            Add Entree
-          </Button>
-        )}
-      </div>
-    </div>
+
+          {index ? (
+            <Button variant="success" type="button" onClick={handleUpdateOrder}>
+              Update Order
+            </Button>
+          ) : (
+            <Button variant="success" type="button" onClick={handleAddEntree}>
+              Add Entree
+            </Button>
+          )}
+        </div>
+      </Card.Body>
+    </Card>
   );
 };

@@ -1,0 +1,134 @@
+.review-page {
+  min-height: 100vh;
+  background-color: #ffeabf;
+  padding-top: 1rem;
+}
+
+.review-main-card {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 22px;
+  background-color: #ffeabf;
+  overflow: hidden;
+}
+
+.review-main-body {
+  background-color: #ffeabf;
+  padding: 2.5rem;
+}
+
+.review-page-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #462f22;
+  margin-bottom: 0;
+}
+
+.review-list-card,
+.review-totals-card,
+.review-actions-card {
+  border: 1px solid #208427;
+  border-radius: 18px;
+  background-color: #ffeabf;
+  overflow: hidden;
+}
+
+.review-list-body,
+.review-totals-body,
+.review-actions-body {
+  background-color: #ffeabf;
+  padding: 1.5rem;
+}
+
+.review-empty-msg {
+  color: #7b6c61;
+  font-size: 1rem;
+}
+
+.review-pizza-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e2cfa8;
+}
+
+.review-pizza-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.review-pizza-description {
+  color: #3b2a20;
+}
+
+.review-pizza-cost {
+  font-weight: 700;
+  color: #462f22;
+}
+
+.review-edit-btn,
+.review-add-btn,
+.review-place-btn {
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.review-totals-body p {
+  margin-bottom: 0.5rem;
+  color: #3b2a20;
+}
+
+.review-total-line {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.review-actions-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.review-right-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.review-tip-group {
+  margin-bottom: 0;
+}
+
+.review-tip-label {
+  font-weight: 600;
+  color: #3b2a20;
+  margin-bottom: 0.5rem;
+}
+
+.review-tip-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.review-tip-dollar {
+  font-weight: 700;
+  color: #462f22;
+}
+
+.review-tip-input.form-control {
+  width: 120px;
+  border-radius: 12px;
+  border: 1px solid #d8cfc5;
+  background-color: #ffffff;
+}
+
+.review-tip-input.form-control:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 0.2rem rgba(215, 107, 0, 0.2);
+}

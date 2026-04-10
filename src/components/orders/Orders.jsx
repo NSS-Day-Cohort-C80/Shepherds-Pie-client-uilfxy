@@ -1,54 +1,39 @@
-import { useEffect, useState } from "react";
 import { PizzaForm } from "./PizzaForm";
 import { DineInOrDeliveryForm } from "./DineInOrDeliveryForm";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import "./Orders.css";
+
 export const Orders = ({ currentUser, orderData, setOrderData }) => {
   return (
-    <Form>
-    
-    <Form.Group className="mb-3">
-        <DineInOrDeliveryForm
-          currentUser={currentUser}
-          orderData={orderData}
-          setOrderData={setOrderData}
-        />
-      </Form.Group>
+    <div className="orders-page">
+      <Container className="py-5">
+        <Card className="orders-card shadow-lg border-0">
+          <Card.Body className="orders-card-body">
+            <div className="text-center mb-4">
+              <h2 className="orders-title">Build Your Order</h2>
+              <p className="orders-subtitle">
+                Choose dine in or delivery, then customize your pizza.
+              </p>
+            </div>
 
-      <Form.Group className="mb-3">
-        <PizzaForm
-          currentUser={currentUser}
-          orderData={orderData}
-          setOrderData={setOrderData}
-        />
-      </Form.Group>
-    </Form>
+            <Form>
+              <DineInOrDeliveryForm
+                currentUser={currentUser}
+                orderData={orderData}
+                setOrderData={setOrderData}
+              />
+
+              <PizzaForm
+                currentUser={currentUser}
+                orderData={orderData}
+                setOrderData={setOrderData}
+              />
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   );
-  };
-
-
-{/* function BasicExample() {
-  return (
-    <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
-  );
-}
-
-export default BasicExample; */}
+};

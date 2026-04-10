@@ -1,9 +1,68 @@
-form-button {
-background-color: #FDF3DE;
-color: #333333;
+.pizza-section-card {
+  border: 1px solid #208427;
+  border-radius: 18px;
+  background-color: #ffeabf;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
 }
 
-form-button:active {
-  color: red;
+.pizza-section-body {
+  background-color: #ffeabf;
+  padding: 1.5rem;
 }
 
+.pizza-section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #462f22;
+}
+
+.pizza-section-subtitle {
+  color: #7b6c61;
+  font-size: 0.95rem;
+}
+
+.pizza-toppings-card {
+  background-color: #ffeabf;
+  border: 1px solid #ece2d7;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.pizza-toppings-body {
+  background-color: #ffeabf;
+  padding: 1.25rem;
+}
+
+.pizza-form-label {
+  font-weight: 600;
+  color: #3b2a20;
+}
+
+.pizza-select.form-select,
+.pizza-input.form-control {
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d8cfc5;
+  background-color: #ffffff;
+}
+
+.pizza-select.form-select:focus,
+.pizza-input.form-control:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 0.2rem rgba(215, 107, 0, 0.2);
+}
+
+.pizza-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pizza-button-row .btn {
+  min-width: 150px;
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 0.7rem 1.2rem;
+}
