@@ -120,4 +120,4 @@ export const DineInOrDeliveryForm = ({
       </Card.Body>
     </Card>
   );
-};
+}
