@@ -12,7 +12,7 @@ export const Orders = ({ currentUser, orderData, setOrderData }) => {
         <Card className="orders-card shadow-lg border-0">
           <Card.Body className="orders-card-body">
             <div className="text-center mb-4">
-              <h2 className="orders-title">Build Your Order</h2>
+              <h1>Build Your Order</h1>
               <p className="orders-subtitle">
                 Choose dine in or delivery, then customize your pizza.
               </p>
