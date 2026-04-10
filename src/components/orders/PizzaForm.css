@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 .pizza-section-card {
   border: 1px solid #208427;
   border-radius: 18px;
@@ -65,4 +67,16 @@
   border-radius: 12px;
   font-weight: 600;
   padding: 0.7rem 1.2rem;
+}
+
+.form-button {
+    margin: 0 6px;
+    background-color: #023a25 !important;
+    color: #fdf9f2 !important;
+}
+
+.review-order-button {
+  margin: 0 6px;
+  background-color: #780201 !important;
+  color: #fdf9f2 !important;
 }

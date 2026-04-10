@@ -91,7 +91,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
     <Card className="pizza-section-card">
       <Card.Body className="pizza-section-body">
         <div className="mb-4">
-          <h4 className="pizza-section-title mb-1">Pizza Details</h4>
+          <h3 className="mb-1">Pizza Details</h3>
           <p className="pizza-section-subtitle mb-0">
             Build your pizza by choosing size, sauce, cheese, and toppings
           </p>
@@ -186,6 +186,7 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
 
         <div className="pizza-button-row">
           <Button
+            className="review-order-button"
             variant="success"
             type="button"
             onClick={() => navigate("/review")}
@@ -194,11 +195,11 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
           </Button>
 
           {index ? (
-            <Button variant="success" type="button" onClick={handleUpdateOrder}>
+            <Button className="form-button" variant="success" type="button" onClick={handleUpdateOrder}>
               Update Order
             </Button>
           ) : (
-            <Button variant="success" type="button" onClick={handleAddEntree}>
+            <Button className="form-button" variant="success" type="button" onClick={handleAddEntree}>
               Add Entree
             </Button>
           )}
