@@ -4,6 +4,12 @@ import { getAllCheeses } from "../../services/cheeseService";
 import { getAllToppings } from "../../services/toppingsService";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "./PizzaForm.css";
 
 export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
   const [allSizes, setAllSizes] = useState([]);
@@ -18,27 +24,14 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
     toppingIds: [],
   });
 
-  // Will give me the /order/index value from editing an order
   const { index } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getAllSizes().then((sizesArray) => {
-      console.log("Sizes data:", sizesArray);
-      setAllSizes(sizesArray);
-      console.log("Sizes set");
-    });
-    getAllSauces().then((saucesArray) => {
-      setAllSauces(saucesArray);
-      console.log("Sauces set");
-    });
-    getAllCheeses().then((cheesesArray) => {
-      setAllCheeses(cheesesArray);
-      console.log("Cheeses set");
-    });
-    getAllToppings().then((toppingsArray) => {
-      setAllToppings(toppingsArray);
-      console.log("Toppings set");
-    });
+    getAllSizes().then(setAllSizes);
+    getAllSauces().then(setAllSauces);
+    getAllCheeses().then(setAllCheeses);
+    getAllToppings().then(setAllToppings);
   }, []);
 
   useEffect(() => {
@@ -50,44 +43,45 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
 }, [index, orderData.entrees]);
 
   const handleSizeSelection = (event) => {
-    const currentPizzaCopy = { ...currentPizza };
-    currentPizzaCopy.sizeId = event.target.value;
-    setCurrentPizza(currentPizzaCopy);
+    setCurrentPizza({
+      ...currentPizza,
+      sizeId: parseInt(event.target.value),
+    });
   };
 
   const handleSauceSelection = (event) => {
-    const currentPizzaCopy = { ...currentPizza };
-    currentPizzaCopy.sauceId = event.target.value;
-    setCurrentPizza(currentPizzaCopy);
+    setCurrentPizza({
+      ...currentPizza,
+      sauceId: parseInt(event.target.value),
+    });
   };
 
   const handleCheeseSelection = (event) => {
-    const currentPizzaCopy = { ...currentPizza };
-    currentPizzaCopy.cheeseId = event.target.value;
-    setCurrentPizza(currentPizzaCopy);
+    setCurrentPizza({
+      ...currentPizza,
+      cheeseId: parseInt(event.target.value),
+    });
   };
 
   const handleToppingsSelection = (event) => {
-    const currentPizzaCopy = { ...currentPizza };
+    const toppingId = parseInt(event.target.value);
+
+    let updatedToppings = [];
 
     if (event.target.checked) {
-      const stateCopy = [...selectedToppings];
-      stateCopy.push(event.target.value);
-      setSelectedToppings(stateCopy);
-      currentPizzaCopy.toppingIds = stateCopy;
-      setCurrentPizza(currentPizzaCopy);
+      updatedToppings = [...selectedToppings, toppingId];
     } else {
-      const stateCopy = [...selectedToppings];
-      const uncheckedToppings = stateCopy.filter(
-        (topping) => topping !== event.target.value,
-      );
-      setSelectedToppings(uncheckedToppings);
-      currentPizzaCopy.toppingIds = uncheckedToppings;
-      setCurrentPizza(currentPizzaCopy);
+      updatedToppings = selectedToppings.filter((id) => id !== toppingId);
     }
+
+    setSelectedToppings(updatedToppings);
+    setCurrentPizza({
+      ...currentPizza,
+      toppingIds: updatedToppings,
+    });
   };
 
-  const handleAddEntree = (event) => {
+  const handleAddEntree = () => {
     const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
     orderDataCopy.entrees.push(currentPizza);
     setOrderData(orderDataCopy);
@@ -95,115 +89,129 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
     setSelectedToppings([]);
   };
 
-  // Replace the existing entree at position index in orderData.entrees with the updated currentPizza
-  const handleUpdateOrder = (event) => {
+  const handleUpdateOrder = () => {
     const orderDataCopy = { ...orderData, entrees: [...orderData.entrees] };
     orderDataCopy.entrees[index] = currentPizza;
     setOrderData(orderDataCopy);
   };
 
-  const navigate = useNavigate();
-
   return (
-    <div>
-      <div>
-        <div>
-          <label htmlFor="size-options">Pick Your Size: </label>
-          <select
-            value={currentPizza.sizeId}
-            id="size-options"
-            onChange={(event) => handleSizeSelection(event)}
-          >
-            <option value="0">Select size</option>
-            {allSizes.map((size) => {
-              return (
-                <option value={size.id} key={size.id} required>
-                  {size.name}
-                </option>
-              );
-            })}
-          </select>
+    <Card className="pizza-section-card">
+      <Card.Body className="pizza-section-body">
+        <div className="mb-4">
+          <h4 className="pizza-section-title mb-1">Pizza Details</h4>
+          <p className="pizza-section-subtitle mb-0">
+            Build your pizza by choosing size, sauce, cheese, and toppings
+          </p>
         </div>
 
-        <div>
-          <label htmlFor="sauce-options">Pick Your Sauce: </label>
-          <select
-            value={currentPizza.sauceId}
-            id="sauce-options"
-            onChange={(event) => handleSauceSelection(event)}
-          >
-            <option value="0">Select sauce</option>
-            {allSauces.map((sauce) => {
-              return (
-                <option value={sauce.id} key={sauce.id} required>
-                  {sauce.name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+        <Row className="g-3 mb-4">
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label className="pizza-form-label" htmlFor="size-options">
+                Pick Your Size
+              </Form.Label>
+              <Form.Select
+                className="pizza-select"
+                id="size-options"
+                value={currentPizza.sizeId}
+                onChange={handleSizeSelection}
+              >
+                <option value={0}>Select size</option>
+                {allSizes.map((size) => (
+                  <option value={size.id} key={size.id}>
+                    {size.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
 
-        <div>
-          <label htmlFor="cheese-options">Pick Your Cheese: </label>
-          <select
-            value={currentPizza.cheeseId}
-            id="cheese-options"
-            onChange={(event) => handleCheeseSelection(event)}
-          >
-            <option value="0">Select cheese</option>
-            {allCheeses.map((cheese) => {
-              return (
-                <option value={cheese.id} key={cheese.id} required>
-                  {cheese.name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-      </div>
-      <div>
-        <h4>Choose Your Toppings</h4>
-        <section>
-          <div>
-            {/* Map over all toppings to render a labeled checkbox for each one. */}
-            {allToppings.map((topping) => {
-              return (
-                <div key={topping.id}>
-                  <label htmlFor={topping.id}>{topping.name} </label>
-                  {/* A checkbox is checked if its id matches one already in currentPizza.toppingIds */}
-                  <input
-                    checked={currentPizza.toppingIds.some(
-                      (id) => parseInt(id) === topping.id,
-                    )}
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label className="pizza-form-label" htmlFor="sauce-options">
+                Pick Your Sauce
+              </Form.Label>
+              <Form.Select
+                className="pizza-select"
+                id="sauce-options"
+                value={currentPizza.sauceId}
+                onChange={handleSauceSelection}
+              >
+                <option value={0}>Select sauce</option>
+                {allSauces.map((sauce) => (
+                  <option value={sauce.id} key={sauce.id}>
+                    {sauce.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+
+          <Col md={4}>
+            <Form.Group>
+              <Form.Label className="pizza-form-label" htmlFor="cheese-options">
+                Pick Your Cheese
+              </Form.Label>
+              <Form.Select
+                className="pizza-select"
+                id="cheese-options"
+                value={currentPizza.cheeseId}
+                onChange={handleCheeseSelection}
+              >
+                <option value={0}>Select cheese</option>
+                {allCheeses.map((cheese) => (
+                  <option value={cheese.id} key={cheese.id}>
+                    {cheese.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Card className="pizza-toppings-card border-0 mb-4">
+          <Card.Body className="pizza-toppings-body">
+            <Form.Label className="pizza-form-label mb-3">
+              Choose Your Toppings
+            </Form.Label>
+            <Row xs={1} sm={2} md={2}>
+              {allToppings.map((topping) => (
+                <Col key={topping.id} className="mb-2">
+                  <Form.Check
                     type="checkbox"
-                    name="topping"
-                    id={topping.id}
+                    id={`topping-${topping.id}`}
+                    label={topping.name}
                     value={topping.id}
-                    onChange={(event) => handleToppingsSelection(event)}
+                    checked={currentPizza.toppingIds.includes(topping.id)}
+                    onChange={handleToppingsSelection}
                   />
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      </div>
+                </Col>
+              ))}
+            </Row>
+          </Card.Body>
+        </Card>
 
-      <div>
-        <button
-          onClick={() => {
-            navigate("/review");
-          }}
-        >
-          Review Order
-        </button>
-        {/* Use index to determine whether the user came from the Edit button on /review or not. 
-        If index has a value, the user is editing and updating an order */}
-        {index ? (
-          <button onClick={handleUpdateOrder}>Update Order</button>
-        ) : (
-          <button onClick={handleAddEntree}>Add Entree</button>
-        )}
-      </div>
-    </div>
+        <div className="pizza-button-row">
+          <Button
+            variant="success"
+            type="button"
+            onClick={() => navigate("/review")}
+          >
+            Review Order
+          </Button>
+
+          {index ? (
+            <Button variant="success" type="button" onClick={handleUpdateOrder}>
+              Update Order
+            </Button>
+          ) : (
+            <Button variant="success" type="button" onClick={handleAddEntree}>
+              Add Entree
+            </Button>
+          )}
+        </div>
+      </Card.Body>
+    </Card>
   );
 };

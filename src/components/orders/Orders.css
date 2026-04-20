@@ -1,0 +1,30 @@
+.orders-page {
+  min-height: 100vh;
+  background-color: #ffeabf;
+  padding-top: 1rem;
+}
+
+.orders-card {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 22px;
+  background-color: #ffeabf;
+  overflow: hidden;
+}
+
+.orders-card-body {
+  background-color: #ffeabf;
+  padding: 2.5rem;
+}
+
+.orders-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #462f22;
+}
+
+.orders-subtitle {
+  color: #7b6c61;
+  font-size: 1rem;
+  margin-bottom: 0;
+}

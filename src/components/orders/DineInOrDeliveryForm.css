@@ -1,0 +1,75 @@
+.dine-card-shell {
+  border: 1px solid #208427;
+  border-radius: 18px;
+  background-color: #ffeabf;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.dine-card-body {
+  background-color: #ffeabf;
+  padding: 1.5rem;
+}
+
+.dine-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #462f22;
+}
+
+.dine-card-subtitle {
+  color: #7b6c61;
+  font-size: 0.95rem;
+}
+
+.dine-toggle-group .btn {
+  min-width: 120px;
+  border-radius: 12px !important;
+  font-weight: 600;
+}
+
+.dine-mode-panel {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.dine-mode-body {
+  padding: 1.25rem;
+}
+
+.dine-mode-in,
+.dine-mode-in .dine-mode-body {
+  background-color: #ffeabf;
+}
+
+.dine-mode-delivery,
+.dine-mode-delivery .dine-mode-body {
+  background-color: #ffeabf;
+}
+
+.dine-mode-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #3b2a20;
+}
+
+.dine-label {
+  font-weight: 600;
+  color: #3b2a20;
+}
+
+.dine-input.form-control,
+.dine-select.form-select {
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  border: 1px solid hsl(0, 0%, 100%);
+  background-color: #ffffff;
+}
+
+.dine-input.form-control:focus,
+.dine-select.form-select:focus {
+  border-color: #ff0000;
+  box-shadow: 0 0 0 0.2rem rgba(215, 107, 0, 0.2);
+}

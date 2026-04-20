@@ -4,6 +4,7 @@ import { NavBar } from "../src/components/nav/NavBar";
 import { Welcome } from "../src/components/welcome/Welcome";
 import { Orders } from "../src/components/orders/Orders";
 import { Review } from "../src/components/review/Review";
+import { OrderComplete } from "../src/components/orders/OrderComplete";
 
 export const ApplicationViews = () => {
   const [currentUser, setCurrentUser] = useState({});
@@ -54,6 +55,7 @@ export const ApplicationViews = () => {
             }
           />
         </Route>
+        <Route path="/order-complete" element={<OrderComplete />} />
         <Route
           path="review"
           element={
@@ -62,6 +64,7 @@ export const ApplicationViews = () => {
               orderData={orderData}
               setOrderData={setOrderData}
             />
+            
           }
         />
       </Route>
