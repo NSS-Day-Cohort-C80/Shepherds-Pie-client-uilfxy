@@ -34,6 +34,14 @@ export const PizzaForm = ({ currentUser, orderData, setOrderData }) => {
     getAllToppings().then(setAllToppings);
   }, []);
 
+  useEffect(() => {
+    if (index !== undefined && orderData.entrees[index]) {
+      const existingPizza = orderData.entrees[index];
+      setCurrentPizza(existingPizza);
+      setSelectedToppings(existingPizza.toppingIds);
+    }
+  }, [index, orderData.entrees]);
+
   const handleSizeSelection = (event) => {
     setCurrentPizza({
       ...currentPizza,
